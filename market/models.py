@@ -11,7 +11,7 @@ class User(db.Model):
     budget = db.Column(db.Integer(), nullable=False, default=1000)
     items = db.relationship('Item', backref='owned_user', lazy=True)
     '''
-    backref is added to Item so we can know the owner of a specific item
+    backref is added to Item so we can have a ref to the owner of a specific item
     '''
 
 
