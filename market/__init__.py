@@ -9,6 +9,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__) #__name__ => local file name
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
+app.config['SECRET_KEY'] = '00c850c1210e1e42eb6c4edc'
+
 db = SQLAlchemy(app)
 
 from market import routes
