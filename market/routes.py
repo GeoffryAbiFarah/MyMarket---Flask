@@ -1,7 +1,7 @@
 from market import app
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from market.models import Item, User
-from market.forms import RegisterForm
+from market.forms import RegisterForm, LoginForm
 from market import db
 
 #routes
@@ -25,7 +25,7 @@ def register_page():
     if form.validate_on_submit(): #if user clicked SUBMIT
         user_to_create = User(username=form.username.data,
                                 email=form.email.data,
-                                password_hash=form.password1.data)
+                                password=form.password1.data)
 
         db.session.add(user_to_create)
         db.session.commit()
@@ -33,5 +33,13 @@ def register_page():
     # if any of our validators fail, it will be stored in form.errors
     if form.errors != {}: #if there are no errors from the validations
         for error in form.errors.values():
-            print("EERROORR: ",error)
+            flash(f'There was an error: {error}', category="danger")
+            # print("EERROORR: ",error)
     return render_template('register.html', form=form)
+
+
+@app.route('/login', methods=['GET','POST'])
+def login_page():
+    form = LoginForm()
+    
+    return render_template('login.html', form=form)

@@ -1,5 +1,5 @@
 from market import db
-
+from market import bcrypt
 #models
 
 #User model
@@ -13,6 +13,16 @@ class User(db.Model):
     '''
     backref is added to Item so we can have a ref to the owner of a specific item
     '''
+
+    # new property...
+    @property
+    def password(self):
+        return self.password
+
+    # when setting a password, it will trigger this function
+    @password.setter
+    def password(self, plain_text_password):
+        self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
 
 
 #Item model
